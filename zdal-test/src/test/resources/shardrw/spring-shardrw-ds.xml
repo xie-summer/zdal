@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="zdal_abstract_shardrw" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-3-0.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/shardrw" />
+	</bean>
+
+	<!-- zdalShardrwMysql -->
+	<bean id="zdalShardrwMysql" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwDSMysql1" />
+	</bean>
+
+	<bean id="zdalShardrwDSMysql1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwMysql" />
+		<property name="appDsName" value="MysqlShardrwDs1" />
+	</bean>
+
+	<!-- zdalShardrwMysql2 -->
+	<bean id="zdalShardrwMysql2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwDSMysql2" />
+	</bean>
+
+	<bean id="zdalShardrwDSMysql2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwMysql" />
+		<property name="appDsName" value="MysqlShardrwDs2" />
+	</bean>
+
+	<!-- zdalShardrwMysql3 -->
+	<bean id="zdalShardrwMysql3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwDSMysql3" />
+	</bean>
+
+	<bean id="zdalShardrwDSMysql3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwMysql" />
+		<property name="appDsName" value="MysqlShardrwDs3" />
+	</bean>
+
+	<!-- zdalShardrwMysql4 -->
+	<bean id="zdalShardrwMysql4" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwDSMysql4" />
+	</bean>
+
+	<bean id="zdalShardrwDSMysql4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwMysql" />
+		<property name="appDsName" value="MysqlShardrwDs4" />
+	</bean>
+
+	<!-- zdalShardrwPriority -->
+	<bean id="zdalShardrwPriority" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwPriorityDsMysql" />
+	</bean>
+
+	<bean id="zdalShardrwPriorityDsMysql" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwPriority" />
+		<property name="appDsName" value="zdalShardrwPriorityDs1" />
+	</bean>
+
+	<!-- zdalShardrwShardDbShardTable -->
+	<bean id="zdalShardrwShardDbShardTable" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="ShardrwShardDbShardTableDs1" />
+	</bean>
+
+	<bean id="ShardrwShardDbShardTableDs1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwShardDbShardTable" />
+		<property name="appDsName" value="ShardrwShardDbShardTableDs1" />
+	</bean>
+
+	<bean id="shardrwtransactionManager1"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="ShardrwShardDbShardTableDs1" />
+		</property>
+	</bean>
+	<bean id="shardrwtransactionTemplate1"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="shardrwtransactionManager1" />
+		</property>
+	</bean>
+	<!-- zdalShardrwWriteReadRetry -->
+	<bean id="zdalShardrwWriteReadRetry" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwWriteReadRetryDs1" />
+	</bean>
+
+	<bean id="zdalShardrwWriteReadRetryDs1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwWriteReadRetry" />
+		<property name="appDsName" value="shardrwWriteReadRetryDs1" />
+	</bean>
+	
+	<!-- zdalShardrwTableSuffix -->
+	<bean id="zdalShardrwTableSuffix" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalShardrwTableSuffixDs" />
+	</bean>
+
+	<bean id="zdalShardrwTableSuffixDs" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardrw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardrwTableSuffix" />
+		<property name="appDsName" value="ShardrwthroughalldbDs" />
+	</bean>
+	
+
+</beans>

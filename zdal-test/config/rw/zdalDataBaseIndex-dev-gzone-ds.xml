@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	
+	<bean id="zdalDataBaseIndex" class="com.alipay.zdal.client.config.bean.ZdalAppBean">
+		<property name="appName" value="zdalDataBaseIndex" />
+		<property name="dbmode" value="dev" />
+		<property name="idcName" value="gzone" />
+		<property name="appDataSourceList">
+			<list>		
+				<ref bean="dataBaseIndex2" />
+				<ref bean="dataBaseIndex1" />
+				<ref bean="dataBaseIndex3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataBaseIndex2" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="dataBaseIndex2" />
+		<property name="dataBaseType" value="MYSQL" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="dataBaseIndex2ds1"/>
+				<ref bean="dataBaseIndex2ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r0w1p0,ds1:r1w2p1" />
+			</map>
+		</property>
+	</bean>
+	<bean id="dataBaseIndex1" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="dataBaseIndex1" />
+		<property name="dataBaseType" value="MYSQL" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="dataBaseIndex1ds1"/>
+				<ref bean="dataBaseIndex1ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r2w1p0,ds1:r1w2p1" />
+			</map>
+		</property>
+	</bean>
+	<bean id="dataBaseIndex3" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="dataBaseIndex3" />
+		<property name="dataBaseType" value="MYSQL" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="dataBaseIndex3ds1"/>
+				<ref bean="dataBaseIndex3ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r1w1p0,ds1:r1w0p1" />
+			</map>
+		</property>
+	</bean>
+	
+
+	<bean id="dataBaseIndex2ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds2" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="dataBaseIndex2ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds1" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="dataBaseIndex1ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds2" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="dataBaseIndex1ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds1" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="dataBaseIndex3ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds2" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="dataBaseIndex3ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds1" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+	
+</beans>

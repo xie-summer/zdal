@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	
+	<bean id="zdalupdateZoneDsZoneError" class="com.alipay.zdal.client.config.bean.ZdalAppBean">
+		<property name="appName" value="zdalupdateZoneDsZoneError" />
+		<property name="dbmode" value="dev" />
+		<property name="idcName" value="gzone" />
+		<property name="appDataSourceList">
+			<list>		
+				<ref bean="zdalZoneDsZoneErrorRight" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="zdalZoneDsZoneErrorRight" />
+		<property name="dataBaseType" value="MYSQL" />
+		<property name="configType" value="SHARD" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="appRule" ref="zdalZoneDsZoneErrorRightRule" />
+		<property name="zoneDSSet" >
+			<set>
+				<value>master_0</value>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="zdalZoneDsZoneErrorRightds9"/>
+				<ref bean="zdalZoneDsZoneErrorRightds7"/>
+				<ref bean="zdalZoneDsZoneErrorRightds8"/>
+				<ref bean="zdalZoneDsZoneErrorRightds1"/>
+				<ref bean="zdalZoneDsZoneErrorRightds2"/>
+				<ref bean="zdalZoneDsZoneErrorRightds0"/>
+				<ref bean="zdalZoneDsZoneErrorRightds5"/>
+				<ref bean="zdalZoneDsZoneErrorRightds6"/>
+				<ref bean="zdalZoneDsZoneErrorRightds3"/>
+				<ref bean="zdalZoneDsZoneErrorRightds4"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+			</map>
+		</property>
+	</bean>
+	
+
+	<bean id="zdalZoneDsZoneErrorRightds9" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds9" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_0" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="failover" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>failover_4</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds7" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds7" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_4" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="failover" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>failover_3</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds8" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds8" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_4" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>master_4</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_1" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="failover" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>failover_0</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds2" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds2" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_1" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>master_1</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_0" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>master_0</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds5" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds5" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_3" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="failover" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>failover_2</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds6" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds6" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_3" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>master_3</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds3" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds3" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_2" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="failover" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>failover_1</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="zdalZoneDsZoneErrorRightds4" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds4" />
+		<property name="jdbcUrl" value="jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_2" />
+	    <property name="userName" value="mysql" />
+	    <property name="password" value="-76079f94c1e11c89" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="false" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			<value>master_2</value>
+			</set>
+		</property>
+	</bean>
+	
+	
+</beans>

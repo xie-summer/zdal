@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="zdal_abstract_rw" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-2-2.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/rw" />
+	</bean>
+	
+		<!-- zdalrwmysql -->
+	<bean id="zdalRwMysql1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql" />
+	</bean>
+
+	<bean id="zdalRwDSMysql" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs1" />
+	</bean>
+	
+		<!-- zdalrwmysql2 -->
+	<bean id="zdalRwMysql2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql2" />
+	</bean>
+
+	<bean id="zdalRwDSMysql2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs2" />
+	</bean>
+	
+		<!-- zdalrwmysql3 -->
+	<bean id="zdalRwMysql3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql3" />
+	</bean>
+
+	<bean id="zdalRwDSMysql3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs3" />
+	</bean>
+	
+		<!-- zdalrwmysql4 -->
+	<bean id="zdalRwMysql4" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql4" />
+	</bean>
+
+	<bean id="zdalRwDSMysql4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs4" />
+	</bean>
+	
+		<!-- zdalrwmysql5 -->
+	<bean id="zdalRwMysql5" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql5" />
+	</bean>
+
+	<bean id="zdalRwDSMysql5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs5" />
+	</bean>
+	
+		<!-- zdalrwmysql6 -->
+	<bean id="zdalRwMysql6" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql6" />
+	</bean>
+
+	<bean id="zdalRwDSMysql6" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs6" />
+	</bean>
+	
+		<!-- zdalrwmysql7 -->
+	<bean id="zdalRwMysql7" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql7" />
+	</bean>
+
+	<bean id="zdalRwDSMysql7" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs7" />
+	</bean>
+	
+		<!-- zdalrwmysql8 -->
+	<bean id="zdalRwMysql8" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql8" />
+	</bean>
+
+	<bean id="zdalRwDSMysql8" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs8" />
+	</bean>
+	
+		<!-- zdalRwMysql9 -->
+	<bean id="zdalRwMysql9" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysql9" />
+	</bean>
+
+	<bean id="zdalRwDSMysql9" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwMysql" />
+		<property name="appDsName" value="MysqlDs9" />
+	</bean>
+	
+		<!-- zdalRwOracle1 -->
+	<bean id="zdalRwOracle1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSOracle1" />
+	</bean>
+
+	<bean id="zdalRwDSOracle1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="appDsName" value="OracleDs1" />
+	</bean>
+	
+			<!-- zdalRwOracle2 -->
+	<bean id="zdalRwOracle2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSOracle2" />
+	</bean>
+
+	<bean id="zdalRwDSOracle2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="appDsName" value="OracleDs2" />
+	</bean>
+			<!-- zdalRwOracle3 -->
+	<bean id="zdalRwOracle3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSOracle3" />
+	</bean>
+
+	<bean id="zdalRwDSOracle3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="appDsName" value="OracleDs3" />
+	</bean>
+		
+			<!-- zdalRwOracle4 -->
+	<bean id="zdalRwOracle4" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSOracle4" />
+	</bean>
+
+	<bean id="zdalRwDSOracle4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="appDsName" value="OracleDs4" />
+	</bean>
+	
+			<!-- zdalRwOracle5 -->
+	<bean id="zdalRwOracle5" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSOracle5" />
+	</bean>
+
+	<bean id="zdalRwDSOracle5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="appDsName" value="OracleDs5" />
+	</bean>
+	
+				<!-- zdalrwmysqlDBIndex -->
+	<bean id="zdalrwmysqlDBIndex" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysqlDBIndex" />
+	</bean>
+	<bean id="zdalRwDSMysqlDBIndex" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalDataBaseIndex" />
+		<property name="appDsName" value="dataBaseIndex1" />
+	</bean>
+	
+			<!-- zdalrwmysqlDBIndex2 -->
+	<bean id="zdalrwmysqlDBIndex2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysqlDBIndex2" />
+	</bean>
+	<bean id="zdalRwDSMysqlDBIndex2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalDataBaseIndex" />
+		<property name="appDsName" value="dataBaseIndex2" />
+	</bean>
+	
+			<!-- zdalrwmysqlDBIndex3 -->
+	<bean id="zdalrwmysqlDBIndex3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwDSMysqlDBIndex3" />
+	</bean>
+	<bean id="zdalRwDSMysqlDBIndex3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalDataBaseIndex" />
+		<property name="appDsName" value="dataBaseIndex3" />
+	</bean>
+	
+	<!-- select nextval from dual -->
+	<bean id="zdalrwOracleNextval" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwOracleDSNextval" />
+	</bean>
+	<bean id="zdalRwOracleDSNextval" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalSelectNextval" />
+		<property name="appDsName" value="Rworacle" />
+	</bean>
+	
+	<!-- get dbIndex -->
+	<bean id="zdalGetDbIndexByNow" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalGetDbDsIndexByNow" />
+	</bean>
+	<bean id="zdalGetDbDsIndexByNow" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalGetDbIndex" />
+		<property name="appDsName" value="getDbDsIndex1" />
+	</bean>
+	
+	<!-- zdalRwPriority1 -->
+	<bean id="zdalRwPriority1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS1" />
+	</bean>
+	<bean id="zdalRwPriorityDS1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs1" />
+	</bean>
+	
+	<!-- zdalRwPriority2 -->
+	<bean id="zdalRwPriority2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS2" />
+	</bean>
+	<bean id="zdalRwPriorityDS2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs2" />
+	</bean>
+	
+	<!-- zdalRwPriority3 -->
+	<bean id="zdalRwPriority3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS3" />
+	</bean>
+	<bean id="zdalRwPriorityDS3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs3" />
+	</bean>
+	
+	<!-- zdalRwPriority4 -->
+	<bean id="zdalRwPriority4" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS4" />
+	</bean>
+	<bean id="zdalRwPriorityDS4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs4" />
+	</bean>
+	
+	<!-- zdalRwPriority5 -->
+	<bean id="zdalRwPriority5" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS5" />
+	</bean>
+	<bean id="zdalRwPriorityDS5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs5" />
+	</bean>
+	
+	<!-- zdalRwPriority6 -->
+	<bean id="zdalRwPriority6" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS6" />
+	</bean>
+	<bean id="zdalRwPriorityDS6" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs6" />
+	</bean>
+	
+	<!-- zdalRwPriority7 -->
+	<bean id="zdalRwPriority7" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS7" />
+	</bean>
+	<bean id="zdalRwPriorityDS7" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs7" />
+	</bean>
+	
+	<!-- zdalRwPriority8 -->
+	<bean id="zdalRwPriority8" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwPriorityDS8" />
+	</bean>
+	<bean id="zdalRwPriorityDS8" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwPriority" />
+		<property name="appDsName" value="rwPriorityDs8" />
+	</bean>
+	
+	<!-- zdalTransactionManager -->
+	<bean id="zdalTransactionManager" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalTransactionManagerDS1" />
+	</bean>
+	<bean id="zdalTransactionManagerDS1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalTransactionManager" />
+		<property name="appDsName" value="transactionManagerOneDs" />
+	</bean>
+	  <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+       <property name="dataSource">
+            <ref bean="zdalTransactionManagerDS1"/>
+        </property>
+    </bean>
+	<bean id="transactionTemplate1"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="transactionManager1"/>
+		</property>
+	</bean>
+	
+		<!-- zdalTransactionManagerTwo -->
+	<bean id="zdalTransactionManagerTwo" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalTransactionManagerTwoDS1" />
+	</bean>
+	<bean id="zdalTransactionManagerTwoDS1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalTransactionManagerTwo" />
+		<property name="appDsName" value="zdalTransactionManagerTwoDs" />
+	</bean>
+	  <bean id="transactionManagerTwo1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+       <property name="dataSource">
+            <ref bean="zdalTransactionManagerTwoDS1"/>
+        </property>
+    </bean>
+	<bean id="transactionTwoTemplate1"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="transactionManagerTwo1"/>
+		</property>
+	</bean>
+	
+	<!-- zdalRwRetry1 -->
+	<bean id="zdalRwRetry1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs1" />
+	</bean>
+	<bean id="zdalRwRetryDs1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry1" />
+	</bean>
+	
+		<!-- zdalRwRetry2 -->
+	<bean id="zdalRwRetry2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs2" />
+	</bean>
+	<bean id="zdalRwRetryDs2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry2" />
+	</bean>
+	
+	<!-- zdalRwRetry3 -->
+	<bean id="zdalRwRetry3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs3" />
+	</bean>
+	<bean id="zdalRwRetryDs3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry3" />
+	</bean>
+	
+	<!-- zdalRwRetry4 -->
+	<bean id="zdalRwRetry4" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs4" />
+	</bean>
+	<bean id="zdalRwRetryDs4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry4" />
+	</bean>
+	
+	<!-- zdalRwRetry5 -->
+	<bean id="zdalRwRetry5" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs5" />
+	</bean>
+	<bean id="zdalRwRetryDs5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry5" />
+	</bean>
+	
+	<!-- zdalRwRetry6 -->
+	<bean id="zdalRwRetry6" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs6" />
+	</bean>
+	<bean id="zdalRwRetryDs6" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry6" />
+	</bean>
+	
+	<!-- zdalRwRetry7 -->
+	<bean id="zdalRwRetry7" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs7" />
+	</bean>
+	<bean id="zdalRwRetryDs7" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry7" />
+	</bean>
+	
+		<!-- zdalRwRetry8 -->
+	<bean id="zdalRwRetry8" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs8" />
+	</bean>
+	<bean id="zdalRwRetryDs8" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry8" />
+	</bean>
+	
+		<!-- zdalRwRetry9 -->
+	<bean id="zdalRwRetry9" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs9" />
+	</bean>
+	<bean id="zdalRwRetryDs9" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry9" />
+	</bean>
+	
+		<!-- zdalRwRetry10 -->
+	<bean id="zdalRwRetry10" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwRetryDs10" />
+	</bean>
+	<bean id="zdalRwRetryDs10" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwRetry" />
+		<property name="appDsName" value="rwRetry10" />
+	</bean>
+	
+	<!-- zdalRwVisitOtherZone -->
+	<bean id="zdalRwVisitOtherZone" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalRwVisitOtherZoneDs" />
+	</bean>
+	<bean id="zdalRwVisitOtherZoneDs" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_rw" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalRwVisitOtherZone" />
+		<property name="appDsName" value="RwVisitOtherZoneDs1" />
+	</bean>
+	
+	
+
+   	
+
+</beans>

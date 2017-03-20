@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="zdalZoneDsZoneErrorRight3Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalZoneDsZoneErrorRight3MasterRule" />
+		<property name="slaveRule" ref="zdalZoneDsZoneErrorRight3SlaveRule" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight3MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight3_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight3SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight3_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight3_users" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="users" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_4]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYRULE:M[_0-_4],F[_0-_4]
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#user_id#)%5
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def groupId=Integer.valueOf(#user_id#)%5; return com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules.getDataSourceKeyOrderNum(groupId);
+			</value>
+		</property>
+	</bean>
+	<bean id="zdalZoneDsZoneErrorRight2Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalZoneDsZoneErrorRight2MasterRule" />
+		<property name="slaveRule" ref="zdalZoneDsZoneErrorRight2SlaveRule" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight2MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight2_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight2SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight2_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight2_users" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="users" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_4]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYRULE:M[_0-_4],F[_0-_4]
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#user_id#)%5
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf((#user_id#)%5*2)
+			</value>
+		</property>
+	</bean>
+	<bean id="zdalZoneDsZoneErrorRight1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalZoneDsZoneErrorRight1MasterRule" />
+		<property name="slaveRule" ref="zdalZoneDsZoneErrorRight1SlaveRule" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight1MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight1_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight1SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalZoneDsZoneErrorRight1_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalZoneDsZoneErrorRight1_users" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="users" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_4]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYRULE:M[_0-_4],F[_0-_4]
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#user_id#)%5
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf((#user_id#)%5*2)
+			</value>
+		</property>
+	</bean>
+</beans>

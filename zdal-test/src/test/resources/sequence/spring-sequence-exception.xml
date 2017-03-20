@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="sequenceDataSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource" 
+		init-method="init" destroy-method="close">
+		<property name="appName" value="sequence1"/>
+        <property name="appDsName" value="sequenceds"/>
+        <property name="dbmode" value="dev"/>
+        <property name="zone" value="gzone"/>        
+        <property name="zdataconsoleUrl" value="http://localcache-2-2.bjl.alipay.net:8080"/>
+        <!-- <property name="configPath" value="D:/workspaces/ZDataSource/zdal2.0.2/zdal-test/config/sequence"/> -->    
+	    <property name="configPath" value="config/sequence"/>    
+	 </bean> 
+	 
+	<bean id="multipleSequenceDao"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+		<property  name="zdalDataSource" ref="sequenceDataSource"/>
+		<!-- 自动调整开关，默认为false -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>
+	
+	<bean id="multipleSequenceFactory" class="com.alipay.zdal.sequence.impl.MultipleSequenceFactory" init-method="init">
+     <!--   <property name="multipleSequenceDao">
+           <ref bean="multipleSequenceDao" />
+       </property>	
+     -->	
+   </bean>
+	
+</beans>

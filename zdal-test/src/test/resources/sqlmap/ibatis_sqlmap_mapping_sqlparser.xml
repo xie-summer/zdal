@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+     
+	 <select id="zdalsqlParserMysql01Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from test1 where test1.clum = #clum#
+		]]>
+	</select>
+	
+	 <select id="zdalsqlParserMysql02Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from test1 where test1.clum in (#clum1#,#clum2#)
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql03Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from test1 where test1.clum  between #clum1# and #clum2# 
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql04Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from test1 where test1.clum  <> #clum1#  
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql05Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from test1 where test1.clum  not in (#clum1#)  
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql06Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where test1.clum = #clum1#
+		]]>
+	</select>
+	
+		<select id="zdalsqlParserMysql07Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(1) as count from test1 where test1.clum = #clum1#
+		]]>
+	</select>
+	
+		<select id="zdalsqlParserMysql08Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(1) as count from test1 where (test1.colu2 is not null) and test1.clum = #clum1#
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql09Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(1) as count from test1 where (test1.colu2 in('DB_A','DB_B')) and test1.clum = #clum1#
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql10Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(1) as count from test1 where (test1.colu2 in('DB_A','DB_B')) and test1.clum = #clum1# order by test1.clum
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql11Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(1) as count from test1 where (test1.colu2 not in('DB_D','DB_E')) and test1.clum = #clum1# 
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql12Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select distinct(colu2) as colu2 from test1 where (test1.colu2 not in('DB_D','DB_E')) and test1.clum = #clum1# 
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql13Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where (test1.colu2 not in('DB_D','DB_E')) and test1.colu2 like '%DB%' 
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql14Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where (test1.colu2 not in('DB_D','DB_E')) limit 0,1
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql15Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where (test1.colu2 not in('DB_D','DB_E')) and 1=1
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql16Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where test1.clum > 101
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql17Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from test1 where test1.clum <= 199
+		]]>
+	</select>
+	
+	<select id="zdalsqlParserMysql18Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select sum(clum) as sumvalue from test1 where test1.clum <= 201
+		]]>
+	</select>
+	
+	
+	<select id="zdalsqlParserMysql19Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select min(clum) as minvalue from test1 where test1.clum <= 201
+		]]>
+	</select>
+	
+	
+	<select id="zdalsqlParserMysql20Sql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select max(clum) as maxvalue from test1 where test1.clum <= 201
+		]]>
+	</select>
+	
+	
+	
+	<insert id="zdalsqlParserMysqlInsertSql" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into test1 (clum,colu2) values (#clum#,#colu2#)
+		]]>
+	</insert>
+	
+	<update id="zdalsqlParserMysqlUpdateSql" parameterClass="java.util.HashMap">
+	   <![CDATA[
+			update test1 set colu2=#colu2# where clum=#clum#
+		]]>
+	</update>
+	
+	<delete id="zdalsqlParserMysqlDeleteSql" parameterClass="java.util.HashMap">
+	    <![CDATA[
+			delete  from  test1  where clum=#clum#
+		]]>
+	</delete>
+	
+	<insert id="zdalsqlParserMysql02InsertSql" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into student (id,age,name,content) values (#id#,#age#,'testname','testcontent')
+		]]>
+	</insert>
+	
+	<select id="zdalsqlParserMysql03SelectSql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select count(*) as count from card_no_month where card_no=#card_no# and (gmtTime> #gmtTime1# and gmtTime< #gmtTime2#) 
+		]]>
+	</select>
+	
+	
+	
+	
+
+</sqlMap>

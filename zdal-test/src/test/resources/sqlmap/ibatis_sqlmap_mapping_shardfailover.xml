@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+     <insert id="insertZoneDsZoneError" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into users (user_id,name,address) values (#user_id#,#name#,#address#)
+		]]>
+	</insert>
+	
+	 <select  id="selectZoneDsZoneError" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name,address  from  users where user_id=#user_id#
+		]]>
+	</select>
+	
+	 <insert id="insertShardfailoverMysql" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into users (user_id,name,address) values (#user_id#,#name#,#address#)
+		]]>
+	</insert>
+	
+	<select  id="selectShardfailoverMysql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name,address  from  users where user_id=#user_id#
+		]]>
+	</select>
+	
+	<insert id="insertShardfailoverTableSuffix1" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into auction_auctions (user_char_id,AUCTION_ID,item_number_id,item_char_id,name) values (#user_char_id#,#AUCTION_ID#,#item_number_id#,#item_char_id#,#name#)
+		]]>
+	</insert>
+	
+	<insert id="insertShardfailoverTableSuffix2" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into card_no_month (card_no,gmtTime,next_sync_time) values (#card_no#,#gmtTime#,#next_sync_time#)
+		]]>
+	</insert>
+	
+    
+
+</sqlMap>

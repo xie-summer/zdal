@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	
+	<bean id="zdalRwOracle" class="com.alipay.zdal.client.config.bean.ZdalAppBean">
+		<property name="appName" value="zdalRwOracle" />
+		<property name="dbmode" value="dev" />
+		<property name="idcName" value="gzone" />
+		<property name="appDataSourceList">
+			<list>		
+				<ref bean="OracleDs5" />
+				<ref bean="OracleDs2" />
+				<ref bean="OracleDs1" />
+				<ref bean="OracleDs4" />
+				<ref bean="OracleDs3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="OracleDs5" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="OracleDs5" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="OracleDs5ds1"/>
+				<ref bean="OracleDs5ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r1w1" />
+			</map>
+		</property>
+	</bean>
+	<bean id="OracleDs2" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="OracleDs2" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="OracleDs2ds1"/>
+				<ref bean="OracleDs2ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r1w1,ds1:r0w0" />
+			</map>
+		</property>
+	</bean>
+	<bean id="OracleDs1" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="OracleDs1" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="OracleDs1ds1"/>
+				<ref bean="OracleDs1ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r2w1,ds1:r1w2" />
+			</map>
+		</property>
+	</bean>
+	<bean id="OracleDs4" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="OracleDs4" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="OracleDs4ds1"/>
+				<ref bean="OracleDs4ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:rw,ds1:r1w1" />
+			</map>
+		</property>
+	</bean>
+	<bean id="OracleDs3" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="OracleDs3" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="OracleDs3ds1"/>
+				<ref bean="OracleDs3ds0"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="rootRwDs" value="ds0:r1,ds1:w1" />
+			</map>
+		</property>
+	</bean>
+	
+
+	<bean id="OracleDs5ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM1" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="OracleDs5ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="OracleDs2ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM1" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="OracleDs2ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="OracleDs1ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM1" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="OracleDs1ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="OracleDs4ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM1" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="OracleDs4ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+
+	<bean id="OracleDs3ds1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM1" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="OracleDs3ds0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@perf6.lab.alipay.net:1521:perfdb6" />
+	    <property name="userName" value="ACM" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="20" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+	
+</beans>

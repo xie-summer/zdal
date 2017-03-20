@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="zdal_abstract_client" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="configPath" value="config/client" />
+	</bean>
+
+	<!-- test LdcDsDrm,update zoneError,update zoneDs -->
+	<bean id="zdalLdcDSDrm" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientZoneDsZoneError" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorRight1" />
+	</bean>
+
+	<!-- test LdcDsDrm,update zoneDs -->
+	<bean id="zdalUpdateZoneDs" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientInitApp" />
+		<property name="appDsName" value="zdataconsoleUrlIsNull" />
+	</bean>
+
+	<!-- test prefill,shard+rw -->
+	<bean id="zdalClientPrefillshardrw" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefill" />
+		<property name="appDsName" value="zdalClientPrefillshardrw" />
+	</bean>
+
+	<!-- test prefill,shard+failover -->
+	<bean id="zdalClientPrefillshardfailover" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefill" />
+		<property name="appDsName" value="zdalClientPrefillshardfailover" />
+	</bean>
+
+	<!-- test prefill,shard+oracle -->
+	<bean id="zdalClientPrefillshardOracle" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefill" />
+		<property name="appDsName" value="zdalClientPrefillshardOracle" />
+	</bean>
+
+	<!-- test prefill,rw -->
+	<bean id="zdalClientPrefillrw" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefill" />
+		<property name="appDsName" value="zdalClientPrefillrw" />
+
+	</bean>
+
+	<!--test prefill,shard+rw,zoneDs is '' -->
+	<bean id="zdalClientPrefillshardrwzoneDsIsNull" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefillZoneDsIsNull" />
+		<property name="appDsName" value="zdalClientPrefillshardrwzoneDsIsNull" />
+
+	</bean>
+
+	<!--test prefill,shard+failover,zoneDs is '' -->
+	<bean id="zdalClientPrefillshardfailoverzoneDsIsNull" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefillZoneDsIsNull" />
+		<property name="appDsName" value="zdalClientPrefillshardfailoverzoneDsIsNull" />
+
+	</bean>
+
+	<!--test prefill,shard+oracle,zoneDs is '' -->
+	<bean id="zdalClientPrefillshardOraclezoneDsIsNull" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefillZoneDsIsNull" />
+		<property name="appDsName" value="zdalClientPrefillshardOraclezoneDsIsNull" />
+	</bean>
+
+	<!--test prefill,rw,zoneDs is '' -->
+	<bean id="zdalClientPrefillshardRwzoneDsIsNull" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_client" init-method="init" destroy-method="close">
+		<property name="appName" value="zdalClientPrefillZoneDsIsNull" />
+		<property name="appDsName" value="zdalClientPrefillshardRwzoneDsIsNull" />
+	</bean>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</beans>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="zdal_abstract_available" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-3-0.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/shardrw" />
+	</bean>
+	
+	<!-- getAvailableDBIndexs -->
+	<bean id="getAvailableDBIndexs"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="getAvailableDBIndexSource" />
+	</bean>
+	<bean id="getAvailableDBIndexSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:0,master_2:0" />
+				<entry key="group_1" value="master_1:1,master_3:0" />
+			</map>
+		</property>				
+	</bean>
+	
+		<!-- getAvailableDBAndTableByWeights -->
+	<bean id="getAvailableDBAndTableByWeights"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="getAvailableDBAndTableByWeightsSource" />
+	</bean>
+	<bean id="getAvailableDBAndTableByWeightsSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:2,master_2:4" />
+				<entry key="group_1" value="master_1:1,master_3:5" />
+			</map>
+		</property>				
+	</bean>
+	
+		<!-- getAvailableGroupDBAndTable -->
+	<bean id="getAvailableGroupDBAndTable"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="getAvailableGroupDBAndTableSource" />
+	</bean>
+	<bean id="getAvailableGroupDBAndTableSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:2,master_2:4" />
+				<entry key="group_1" value="master_1:1,master_3:5" />
+			</map>
+		</property>	
+		<property name="shardingRules">
+		  <map>
+		  		<entry key="users" value="Integer.valueOf(#user_id#)%2;"/>
+		  </map>
+		</property>				
+	</bean>
+	
+		<!-- getAvailableGroupDB -->
+	<bean id="getAvailableGroupDB"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="getAvailableGroupDBSource" />
+	</bean>
+	<bean id="getAvailableGroupDBSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:2,master_2:4" />
+				<entry key="group_1" value="master_1:0,master_3:5" />
+			</map>
+		</property>	
+		<property name="shardingRules">
+		  <map>
+		  		<entry key="users" value="Integer.valueOf(#user_id#)%2;"/>
+		  </map>
+		</property>				
+	</bean>
+	
+			<!-- isDataBaseAvailableTest -->
+	<bean id="isDataBaseAvailableTest"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="isDataBaseAvailableSourceTest" />
+	</bean>
+	<bean id="isDataBaseAvailableSourceTest" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:2,master_2:4" />
+				<entry key="group_1" value="master_1:0,master_3:5" />
+			</map>
+		</property>				
+	</bean>
+		
+		<!-- getAllTableNames -->
+	<bean id="getAllTableNames"
+		class="com.alipay.zdal.client.util.dispatchanalyzer.ZdalDatasourceIntrospector"
+		init-method="init">
+		<property name="targetDataSource" ref="getAllTableNamesSource" />
+	</bean>
+	<bean id="getAllTableNamesSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+	parent="zdal_abstract_available"	init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalAvailable" />
+		<property name="appDsName" value="zdalAvailableDs1" />
+		<property name="prefill" value="true" />
+		<property name="keyWeightConfig">
+			<map>
+				<entry key="group_0" value="master_0:2,master_2:4" />
+				<entry key="group_1" value="master_1:0,master_3:5" />
+			</map>
+		</property>				
+	</bean>
+	
+	
+</beans>

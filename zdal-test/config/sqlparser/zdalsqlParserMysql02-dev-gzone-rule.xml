@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="zdalsqlParserMysql02Ds1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalsqlParserMysql02Ds1MasterRule" />
+		<property name="slaveRule" ref="zdalsqlParserMysql02Ds1SlaveRule" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql02Ds1MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="student" value-ref="zdalsqlParserMysql02Ds1_master" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql02Ds1SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="student" value-ref="zdalsqlParserMysql02Ds1_master" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql02Ds1_master" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="student" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				master_0,master_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#id#)%2
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="zdalsqlParserMysql03Ds1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalsqlParserMysql03Ds1MasterRule" />
+		<property name="slaveRule" ref="zdalsqlParserMysql03Ds1SlaveRule" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql03Ds1MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="card_no_month" value-ref="zdalsqlParserMysql03Ds1_card_no_month" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql03Ds1SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="card_no_month" value-ref="zdalsqlParserMysql03Ds1_card_no_month" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalsqlParserMysql03Ds1_card_no_month" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="card_no_month" />
+		<property name="tbSuffix">
+			<value>twoColumnForEachDB:[_00-_01],[_00-_11]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYPOOL:master_0,master_1,master_2,master_3
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#card_no#.substring(9,10),10) % 2 * 12 + #gmtTime,1_month,12#.getAt(Calendar.MONTH)
+			</value>
+		</property>
+		<property name="dbRuleList">
+			<value>
+				Integer.valueOf(#card_no#.substring(9,10),10) % 4;
+			</value>
+		</property>
+	</bean>
+</beans>

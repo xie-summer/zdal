@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	classpath:spring/spring-beans-2.5.xsd"
+	default-autowire="byName">
+		<bean id="testRule" class="com.alipay.zdal.rule.config.beans.AppRule">
+		<property name="masterRule" ref="testRWRule" />
+		<property name="slaveRule" ref="testRWRule" />
+	</bean>
+	
+	<bean id="testRWRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="userTableRule" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="userTableRule" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="tbSuffix" value="resetForEachDB:[_00-_09]"/>
+		<property name="dbIndexes" value="master_0,master_1,master_2,master_3,master_4"/>
+		<property name="dbRuleArray">
+			<list>
+				<value>
+					return com.alipay.zdal.client.test.shard.ShardRuleParser.parserDbIndex(#user_id#);
+				</value>
+			</list>
+		</property>
+		<property name="tbRuleArray">
+			<list>
+				<value>
+					return com.alipay.zdal.client.test.shard.ShardRuleParser.parserTbIndex(#user_id#);
+				</value>
+			</list>
+		</property>
+	</bean>
+</beans>

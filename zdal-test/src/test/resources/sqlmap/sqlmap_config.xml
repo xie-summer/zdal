@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <settings cacheModelsEnabled="true" enhancementEnabled="false" lazyLoadingEnabled="false" maxRequests="3000" maxSessions="3000" maxTransactions="3000" useStatementNamespaces="false"/>    
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_client.xml"/>
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_rw.xml"/>
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_shardrw.xml"/>
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_shardfailover.xml"/>
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_dynamicAdjustment.xml"/>
+    <sqlMap resource="sqlmap/ibatis_sqlmap_mapping_sqlparser.xml"/>
+    
+       
+</sqlMapConfig>

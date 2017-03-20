@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	classpath:spring/spring-beans-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="ShardGroup" class="com.alipay.zdal.client.config.bean.ZdalAppBean">
+		<property name="appName" value="ShardGroup" />
+		<property name="dbmode" value="dev" />
+		<property name="appDataSourceList">
+			<list>		
+				<ref bean="ShardGroupDataSource" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="ShardGroupDataSource" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="ShardGroupDataSource" />
+		<property name="dataBaseType" value="MYSQL" />
+		<property name="configType" value="SHARD_GROUP" />
+		<property name="appRule" ref="testRule"/>
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="physics0"/>
+				<ref bean="physics1"/>
+				<ref bean="physics2"/>
+				<ref bean="physics3"/>	
+				<ref bean="physics4"/>	
+				<ref bean="physics5"/>			
+				<ref bean="physics6"/>			
+				<ref bean="physics7"/>			
+				<ref bean="physics8"/>			
+				<ref bean="physics9"/>			
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="group_0" value="ds0:r10w10,ds1:r10w0"/>
+				<entry key="group_1" value="ds2:r10w10,ds3:r10w0"/>
+				<entry key="group_2" value="ds4:r10w10,ds5:r10w0"/>
+				<entry key="group_3" value="ds6:r10w10,ds7:r10w0"/>
+				<entry key="group_4" value="ds8:r10w10,ds9:r10w0"/>
+			</map>
+		</property>
+	</bean>
+	
+
+	<bean id="physics0" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds0" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_0?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+
+	<bean id="physics1" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds1" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_1?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+
+	<bean id="physics2" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds2" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_2?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+
+	<bean id="physics3" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds3" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_3?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics4" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds4" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_4?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics5" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds5" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_5?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics6" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds6" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_6?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics7" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds7" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_7?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics8" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds8" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_8?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+	
+	<bean id="physics9" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="ds9" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shardgroup_9?useUnicode=true&amp;characterEncoding=gbk" />
+	    <property name="userName" value="root" />
+	    <property name="password" value="root" />
+	    <property name="minConn" value="1" />
+	    <property name="maxConn" value="10" />
+	    <property name="blockingTimeoutMillis" value="180" />
+	    <property name="idleTimeoutMinutes" value="180" />
+	    <property name="preparedStatementCacheSize" value="100" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="prefill" value="true"/>
+	    <property name="connectionProperties">
+			<map>
+				<entry key="connectTimeout" value="500" />
+				<entry key="autoReconnect" value="true" />
+				<entry key="initialTimeout" value="1" />
+				<entry key="maxReconnects" value="2" />
+				<entry key="socketTimeout" value="5000" />
+				<entry key="failOverReadOnly" value="false" />
+			</map>
+		 </property>
+	</bean>
+</beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="zdal_abstract_sqlparser" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-2-2.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/sqlparser" />
+	</bean>
+	
+		<!-- zdalsqlParserMysql01 -->
+	<bean id="zdalsqlParserMysql01" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalsqlParserMysql01Ds" />
+	</bean>
+
+	<bean id="zdalsqlParserMysql01Ds" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_sqlparser" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalsqlParserMysql01" />
+		<property name="appDsName" value="zdalsqlParserMysql01Ds" />
+	</bean>
+	
+	
+	<!-- zdalsqlParserMysql02  -->
+	<bean id="zdalsqlParserMysql02" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalsqlParserMysql02Ds1" />
+	</bean>
+
+	<bean id="zdalsqlParserMysql02Ds1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_sqlparser" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalsqlParserMysql02" />
+		<property name="appDsName" value="zdalsqlParserMysql02Ds1" />
+	</bean>
+	
+		<!-- zdalsqlParserMysql03  -->
+	<bean id="zdalsqlParserMysql03" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalsqlParserMysql03Ds1" />
+	</bean>
+
+	<bean id="zdalsqlParserMysql03Ds1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_sqlparser" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalsqlParserMysql02" />
+		<property name="appDsName" value="zdalsqlParserMysql03Ds1" />
+	</bean>
+	
+	
+	
+	
+</beans>

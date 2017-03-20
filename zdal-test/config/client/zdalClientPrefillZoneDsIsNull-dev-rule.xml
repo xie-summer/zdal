@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="zdalClientPrefillshardOraclezoneDsIsNullRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalClientPrefillshardOraclezoneDsIsNullMasterRule" />
+		<property name="slaveRule" ref="zdalClientPrefillshardOraclezoneDsIsNullSlaveRule" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardOraclezoneDsIsNullMasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="ORACLE" />
+		<property name="tableRules">
+			<map>
+				<entry key="AUCTION_AUCTIONS" value-ref="zdalClientPrefillshardOraclezoneDsIsNull_AUCTION_AUCTIONS" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardOraclezoneDsIsNullSlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="ORACLE" />
+		<property name="tableRules">
+			<map>
+				<entry key="AUCTION_AUCTIONS" value-ref="zdalClientPrefillshardOraclezoneDsIsNull_AUCTION_AUCTIONS" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardOraclezoneDsIsNull_AUCTION_AUCTIONS" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="AUCTION_AUCTIONS" />
+		<property name="tbSuffix">
+			<value>dbIndexForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYPOOL:master_0,master_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return 0
+			</value>
+		</property>
+		<property name="dbRuleList">
+			<list>
+			<value>
+				Integer.valueOf(#AUCTION_ID#)%2
+			</value>
+			<value>
+				Integer.valueOf(#user_char_id#) % 2
+			</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="zdalClientPrefillshardrwzoneDsIsNullRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="zdalClientPrefillshardrwzoneDsIsNullReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="zdalClientPrefillshardrwzoneDsIsNullReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="zdalClientPrefillshardrwzoneDsIsNull_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardrwzoneDsIsNull_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+	<bean id="zdalClientPrefillshardfailoverzoneDsIsNullRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalClientPrefillshardfailoverzoneDsIsNullMasterRule" />
+		<property name="slaveRule" ref="zdalClientPrefillshardfailoverzoneDsIsNullSlaveRule" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardfailoverzoneDsIsNullMasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalClientPrefillshardfailoverzoneDsIsNull_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardfailoverzoneDsIsNullSlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalClientPrefillshardfailoverzoneDsIsNull_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalClientPrefillshardfailoverzoneDsIsNull_users" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="users" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_4]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYRULE:M[_0-_4],F[_0-_4]
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#user_id#)%5
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def groupId=Integer.valueOf(#user_id#)%5; return com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules.getDataSourceKeyOrderNum(groupId);
+			</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="RW952060" dbmode="dev" idcName="gzone" zoneError="EXCEPTOIN">
+<AppDataSource name="RW952060" dataBaseType="MYSQL" version="1" zoneDs="">
+  <datasource name="rootRwDs" dataSourceType="RW" readwriteRule="ds0:r2w1,ds1:r1w2">
+    <datasource name="ds0" dataSourceType="PHYSICS">
+      <blockingTimeoutMillis>180</blockingTimeoutMillis>
+      <driverClass>com.mysql.jdbc.Driver</driverClass>
+      <idleTimeoutMinutes>180</idleTimeoutMinutes>
+      <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds1</jdbcUrl>
+      <maxConn>20</maxConn>
+      <minConn>1</minConn>
+      <password>-76079f94c1e11c89</password>
+      <preparedStatementCacheSize>100</preparedStatementCacheSize>
+      <queryTimeout>180</queryTimeout>
+      <sqlValve>-1,1</sqlValve>
+      <tableValve />
+      <transactionValve>-1,1</transactionValve>
+      <userName>mysql</userName>
+    </datasource>
+    <datasource name="ds1" dataSourceType="PHYSICS">
+      <blockingTimeoutMillis>180</blockingTimeoutMillis>
+      <driverClass>com.mysql.jdbc.Driver</driverClass>
+      <idleTimeoutMinutes>180</idleTimeoutMinutes>
+      <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/zds2</jdbcUrl>
+      <maxConn>20</maxConn>
+      <minConn>1</minConn>
+      <password>-76079f94c1e11c89</password>
+      <preparedStatementCacheSize>100</preparedStatementCacheSize>
+      <queryTimeout>180</queryTimeout>
+      <sqlValve>-1,1</sqlValve>
+      <tableValve />
+      <transactionValve>-1,1</transactionValve>
+      <userName>mysql</userName>
+    </datasource>
+  </datasource>
+</AppDataSource>
+</App>

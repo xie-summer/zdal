@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+     
+     <insert id="insertShardrwMysql" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into user (user_id,age,name,gmt_created,gmt_modified) values (#user_id#,#age#,#name#,now(),now())
+		]]>
+	</insert>
+	
+	 <select id="selectShardrwMysql" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id=10 and age=10
+		]]>
+	</select>
+	
+	 <select id="selectShardrwMysqlOther" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id=10 and age=11
+		]]>
+	</select>
+	
+	 <select id="selectShardrwMysqlOther2" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id=11 and age=10
+		]]>
+	</select>
+	
+	
+	 <select id="selectShardrwMysqlPriority" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id=#user_id# and age=#age#
+		]]>
+	</select>
+	
+	 <select id="selectShardrwMysqlMergeResult" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id in (2,3) and age= 1 order by name
+		]]>
+	</select>
+	
+	 <select id="selectShardrwMysqlMergeResultSum" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select sum(user_id) as sumvalue from  user where user_id in (2,3) and age= 1
+		]]>
+	</select>
+		
+	 <select id="selectShardrwMysqlMergeResultMin" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select min(user_id) as minvalue from  user where user_id in (2,3) and age= 1
+		]]>
+	</select>
+	
+	 <select id="selectShardrwMysqlMergeResultMax" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select max(user_id) as maxvalue from  user where user_id in (2,3) and age= 1
+		]]>
+	</select>
+	
+	<select id="selectShardrwMysqlTwoTablesMergeResult" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select name from  user where user_id in (2,3) and age in(1,2) 
+		]]>
+	</select>
+	
+	<select id="selectShardrwMysqlTwoTablesMergeResultSum" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select sum(user_id) as sumvalue from  user where user_id in (2,3) and age in(1,2) 
+		]]>
+	</select>
+	
+	
+	
+	 <insert id="insertShardrwTableSuffix" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into document (the_key,the_namespace,the_value,Gmt_create,Gmt_modify,Expired_time) values (#the_key#,#the_namespace#,#the_value#,now(),now(),now())
+		]]>
+	</insert>
+	
+	
+
+</sqlMap>

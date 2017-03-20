@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<insert id="insertRwSql" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into test1(clum,colu2) values (#num#,'DB_G')
+		]]>
+	</insert>
+
+	<select id="queryRwSql" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+	  <![CDATA[
+			select colu2 from  test1 where clum=100
+		]]>
+	</select>
+
+	<insert id="insertRwSqlOracle" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into ACM_TARGET_RECORD (id,test_varchar,test_date,int_field_1,int_field_2,var_field_1,var_field_2) values (#num#,'DB_G',to_date('2013-10-08 20:46:34','YYYY-MM-DD-HH24:MI:SS'),1,1,'a','b')
+
+		]]>
+	</insert>
+
+	<select  id="queryRwSqlOracle" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  <![CDATA[
+			select test_varchar as colu2 from  ACM_TARGET_RECORD where id=100
+		]]>
+	</select>
+
+	<select id="selectNextval" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+	  <![CDATA[
+			select ID.nextval as val from dual
+		]]>
+	</select>
+
+	<insert id="rw-Insert-Select" parameterClass="java.util.HashMap">
+ <![CDATA[ 
+insert into test1(clum,colu2) select clum,colu2 from test2 where clum=99
+ ]]>
+	</insert>
+
+	<select id="rw-Select" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+	  <![CDATA[
+		select user_id, age, name from master_0 where user_id=20
+		]]>
+	</select>
+
+	<delete id="rw-Delete" parameterClass="java.util.HashMap">
+ <![CDATA[ 
+delete from master_0 where user_id=20
+ ]]>
+	</delete>
+
+	<insert id="rw-insert" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into master_0 (user_id,age,name,content) values (20,10,'a','s')
+		]]>
+	</insert>
+
+	<insert id="rw-insert-withParam" parameterClass="java.util.HashMap">
+	  <![CDATA[
+			insert into master_0 (user_id,age,name,content) values (#user_id#,#age#,#name#,#content#)
+		]]>
+	</insert>
+	
+	<select id="rw-Select-withParam" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+	  <![CDATA[
+			select content from  master_0 where user_id=#user_id# and age=#age# and name=#name# and content=#content#
+		]]>
+	</select>
+	
+
+	<select id="queryRwSqlTddl" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+	  <![CDATA[
+			select address from  users where name='DB'
+		]]>
+	</select>
+	
+	<insert id="insertRwSqlTddl" parameterClass="java.util.HashMap" >
+	  <![CDATA[
+			insert into users(name,address) values ('DB','DB_G')
+		]]>
+	</insert>
+
+
+
+
+</sqlMap>

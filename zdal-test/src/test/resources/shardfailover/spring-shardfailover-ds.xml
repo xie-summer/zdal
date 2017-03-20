@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="zdal_abstract_shardfailover" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-3-0.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/shardfailover" />
+	</bean>
+	
+	<!-- zdalZoneDsZoneErrorRight -->
+	<bean id="zdalZoneDsZoneErrorRight" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalDS" />
+	</bean>
+
+	<bean id="zdalDS" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalZoneDsZoneError" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorRight" />
+	</bean>
+
+	<!-- zdalZoneDsZoneErrorRight2 -->
+	<bean id="zdalZoneDsZoneErrorRight2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalDS2" />
+	</bean>
+
+	<bean id="zdalDS2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalZoneDsZoneError" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorRight2" />
+	</bean>
+
+	<!-- zdalZoneDsZoneErrorRight3 -->
+	<bean id="zdalZoneDsZoneErrorRight3" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalDS3" />
+	</bean>
+
+	<bean id="zdalDS3" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalZoneDsZoneError" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorRight3" />
+	</bean>
+
+	<!-- zdalZoneDsZoneErrorLog -->
+	<bean id="zdalZoneDsZoneErrorLog" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalDS4" />
+	</bean>
+
+	<bean id="zdalDS4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalZoneDsZoneErrorLog" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorLogRight" />
+	</bean>
+
+	<!--zdalZoneDsZoneErrorLog2 -->
+	<bean id="zdalZoneDsZoneErrorLog2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="zdalDS5" />
+	</bean>
+
+	<bean id="zdalDS5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalZoneDsZoneErrorLog" />
+		<property name="appDsName" value="zdalZoneDsZoneErrorLogRight2" />
+	</bean>
+	
+	<!-- zdalShardfailoverShardDbShardTable -->
+	<bean id="zdalShardfailoverShardDbShardTable" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="shardfailoverShardDbShardTableDs1" />
+	</bean>
+
+	<bean id="shardfailoverShardDbShardTableDs1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardfailoverShardDbShardTable" />
+		<property name="appDsName" value="shardfailoverShardDbShardTableDs1" />
+	</bean>
+	
+	 <bean id="shardfailovertransactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+       <property name="dataSource">
+            <ref bean="shardfailoverShardDbShardTableDs1"/>
+        </property>
+    </bean>
+	<bean id="shardfailovertransactionTemplate1"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="shardfailovertransactionManager1"/>
+		</property>
+	</bean>
+	
+	<!-- zdalShardfailoverTableSuffix1 -->
+	<bean id="zdalShardfailoverTableSuffix1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="shardfailoverTableSuffix1" />
+	</bean>
+
+	<bean id="shardfailoverTableSuffix1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardFailoverTableSuffix" />
+		<property name="appDsName" value="shardfailoverdbIndexForEachDB" />
+	</bean>
+	
+		<!-- zdalShardfailoverTableSuffix2 -->
+	<bean id="zdalShardfailoverTableSuffix2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap_config.xml" />
+		<property name="dataSource" ref="shardfailoverTableSuffix2" />
+	</bean>
+
+	<bean id="shardfailoverTableSuffix2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"
+		parent="zdal_abstract_shardfailover" init-method="initV3" destroy-method="close">
+		<property name="appName" value="zdalShardFailoverTableSuffix" />
+		<property name="appDsName" value="shardfailovertwoColumnForEachDB" />
+	</bean>
+	
+	
+</beans>

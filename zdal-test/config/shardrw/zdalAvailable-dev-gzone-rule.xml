@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="zdalAvailableDs1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="zdalAvailableDs1MasterRule" />
+		<property name="slaveRule" ref="zdalAvailableDs1SlaveRule" />
+	</bean>
+	
+	<bean id="zdalAvailableDs1MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalAvailableDs1_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalAvailableDs1SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="users" value-ref="zdalAvailableDs1_users" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="zdalAvailableDs1_users" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="users" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_4]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYPOOL:master_0,master_1,master_2,master_3
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#user_id#)%5
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf((#user_id#)%5*2)
+			</value>
+		</property>
+		<property name="shardingRules">
+			<list>
+				<value>
+					Integer.valueOf(#user_id#)%2;
+				</value>
+			</list>
+		</property>
+	</bean>
+</beans>

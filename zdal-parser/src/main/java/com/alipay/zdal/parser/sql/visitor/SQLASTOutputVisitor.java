@@ -1,0 +1,1129 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
+package com.alipay.zdal.parser.sql.visitor;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alipay.zdal.parser.exceptions.SqlParserException;
+import com.alipay.zdal.parser.sql.ast.SQLCommentHint;
+import com.alipay.zdal.parser.sql.ast.SQLDataType;
+import com.alipay.zdal.parser.sql.ast.SQLExpr;
+import com.alipay.zdal.parser.sql.ast.SQLObject;
+import com.alipay.zdal.parser.sql.ast.SQLOrderBy;
+import com.alipay.zdal.parser.sql.ast.SQLSetQuantifier;
+import com.alipay.zdal.parser.sql.ast.SQLStatement;
+import com.alipay.zdal.parser.sql.ast.expr.SQLAggregateExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLAllColumnExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLAllExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLAnyExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLBetweenExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLBinaryOpExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLBinaryOperator;
+import com.alipay.zdal.parser.sql.ast.expr.SQLCaseExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLCastExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLCharExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLCurrentOfCursorExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLDefaultExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLExistsExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLHexExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLIdentifierExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLInListExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLInSubQueryExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLIntegerExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLListExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLMethodInvokeExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLNCharExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLNotExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLNullExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLNumberExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLObjectCreateExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLPropertyExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLQueryExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLSomeExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLUnaryExpr;
+import com.alipay.zdal.parser.sql.ast.expr.SQLVariantRefExpr;
+import com.alipay.zdal.parser.sql.ast.statement.NotNullConstraint;
+import com.alipay.zdal.parser.sql.ast.statement.SQLAlterTableAddColumn;
+import com.alipay.zdal.parser.sql.ast.statement.SQLAlterTableDropColumnItem;
+import com.alipay.zdal.parser.sql.ast.statement.SQLAssignItem;
+import com.alipay.zdal.parser.sql.ast.statement.SQLCallStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLColumnConstraint;
+import com.alipay.zdal.parser.sql.ast.statement.SQLColumnDefinition;
+import com.alipay.zdal.parser.sql.ast.statement.SQLCommentStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLCreateDatabaseStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLCreateTableStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLDeleteStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLDropIndexStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLDropTableStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLDropViewStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLExprTableSource;
+import com.alipay.zdal.parser.sql.ast.statement.SQLInsertStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLInsertStatement.ValuesClause;
+import com.alipay.zdal.parser.sql.ast.statement.SQLJoinTableSource;
+import com.alipay.zdal.parser.sql.ast.statement.SQLJoinTableSource.JoinType;
+import com.alipay.zdal.parser.sql.ast.statement.SQLReleaseSavePointStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLRollbackStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSavePointStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelect;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelectGroupByClause;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelectItem;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelectOrderByItem;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelectQueryBlock;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSelectStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSetStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLSubqueryTableSource;
+import com.alipay.zdal.parser.sql.ast.statement.SQLTableElement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLTruncateStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLUnionQuery;
+import com.alipay.zdal.parser.sql.ast.statement.SQLUniqueConstraint;
+import com.alipay.zdal.parser.sql.ast.statement.SQLUpdateSetItem;
+import com.alipay.zdal.parser.sql.ast.statement.SQLUpdateStatement;
+import com.alipay.zdal.parser.sql.ast.statement.SQLUseStatement;
+
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: SQLASTOutputVisitor.java, v 0.1 2012-11-17 ÏÂÎç3:56:21 Exp $
+ */
+public class SQLASTOutputVisitor extends SQLASTVisitorAdapter {
+
+    protected final Appendable appender;
+    private String             indent      = "\t";
+    private int                indentCount = 0;
+
+    public SQLASTOutputVisitor(Appendable appender) {
+        this.appender = appender;
+    }
+
+    public int getIndentCount() {
+        return indentCount;
+    }
+
+    public Appendable getAppender() {
+        return appender;
+    }
+
+    public void decrementIndent() {
+        this.indentCount -= 1;
+    }
+
+    public void incrementIndent() {
+        this.indentCount += 1;
+    }
+
+    public void print(char value) {
+        try {
+            this.appender.append(value);
+        } catch (IOException e) {
+            throw new SqlParserException("println error", e);
+        }
+    }
+
+    public void print(int value) {
+        print(Integer.toString(value));
+    }
+
+    public void print(long value) {
+        print(Long.toString(value));
+    }
+
+    public void print(String text) {
+        try {
+            this.appender.append(text);
+        } catch (IOException e) {
+            throw new SqlParserException("println error", e);
+        }
+    }
+
+    protected void printAlias(String alias) {
+        if ((alias != null) && (alias.length() > 0)) {
+            print(" ");
+            print(alias);
+        }
+    }
+
+    protected void printAndAccept(List<? extends SQLObject> nodes, String seperator) {
+        for (int i = 0, size = nodes.size(); i < size; ++i) {
+            if (i != 0) {
+                print(seperator);
+            }
+            nodes.get(i).accept(this);
+        }
+    }
+
+    protected void printSelectList(List<SQLSelectItem> selectList) {
+        incrementIndent();
+        for (int i = 0, size = selectList.size(); i < size; ++i) {
+            if (i != 0) {
+                if (i % 5 == 0) {
+                    println();
+                }
+
+                print(", ");
+            }
+
+            selectList.get(i).accept(this);
+        }
+        decrementIndent();
+    }
+
+    protected void printlnAndAccept(List<? extends SQLObject> nodes, String seperator) {
+        for (int i = 0, size = nodes.size(); i < size; ++i) {
+            if (i != 0) {
+                println(seperator);
+            }
+
+            ((SQLObject) nodes.get(i)).accept(this);
+        }
+    }
+
+    public void printIndent() {
+        for (int i = 0; i < this.indentCount; ++i)
+            print(this.indent);
+    }
+
+    public void println() {
+        print("\n");
+        printIndent();
+    }
+
+    public void println(String text) {
+        print(text);
+        println();
+    }
+
+    // ////////////////////
+
+    public boolean visit(SQLBetweenExpr x) {
+        x.getTestExpr().accept(this);
+
+        if (x.isNot()) {
+            print(" NOT BETWEEN ");
+        } else {
+            print(" BETWEEN ");
+        }
+
+        x.getBeginExpr().accept(this);
+        print(" AND ");
+        x.getEndExpr().accept(this);
+
+        return false;
+    }
+
+    public boolean visit(SQLBinaryOpExpr x) {
+        SQLObject parent = x.getParent();
+        boolean isRoot = parent instanceof SQLSelectQueryBlock;
+        boolean relational = x.getOperator() == SQLBinaryOperator.BooleanAnd
+                             || x.getOperator() == SQLBinaryOperator.BooleanOr;
+
+        if (isRoot && relational) {
+            incrementIndent();
+        }
+
+        List<SQLExpr> groupList = new ArrayList<SQLExpr>();
+        SQLExpr left = x.getLeft();
+        for (;;) {
+            if (left instanceof SQLBinaryOpExpr
+                && ((SQLBinaryOpExpr) left).getOperator() == x.getOperator()) {
+                SQLBinaryOpExpr binaryLeft = (SQLBinaryOpExpr) left;
+                groupList.add(binaryLeft.getRight());
+                left = binaryLeft.getLeft();
+            } else {
+                groupList.add(left);
+                break;
+            }
+        }
+
+        for (int i = groupList.size() - 1; i >= 0; --i) {
+            SQLExpr item = groupList.get(i);
+            visitBinaryLeft(item, x.getOperator());
+
+            if (relational) {
+                println();
+            } else {
+                print(" ");
+            }
+            print(x.getOperator().name);
+            print(" ");
+        }
+
+        visitorBinaryRight(x);
+
+        if (isRoot && relational) {
+            decrementIndent();
+        }
+
+        return false;
+    }
+
+    private void visitorBinaryRight(SQLBinaryOpExpr x) {
+        if (x.getRight() instanceof SQLBinaryOpExpr) {
+            SQLBinaryOpExpr right = (SQLBinaryOpExpr) x.getRight();
+            boolean rightRational = right.getOperator() == SQLBinaryOperator.BooleanAnd
+                                    || right.getOperator() == SQLBinaryOperator.BooleanOr;
+
+            if (right.getOperator().priority >= x.getOperator().priority) {
+                if (rightRational) {
+                    incrementIndent();
+                }
+
+                print('(');
+                right.accept(this);
+                print(')');
+
+                if (rightRational) {
+                    decrementIndent();
+                }
+            } else {
+                right.accept(this);
+            }
+        } else {
+            x.getRight().accept(this);
+        }
+    }
+
+    private void visitBinaryLeft(SQLExpr left, SQLBinaryOperator op) {
+        if (left instanceof SQLBinaryOpExpr) {
+            SQLBinaryOpExpr binaryLeft = (SQLBinaryOpExpr) left;
+            boolean leftRational = binaryLeft.getOperator() == SQLBinaryOperator.BooleanAnd
+                                   || binaryLeft.getOperator() == SQLBinaryOperator.BooleanOr;
+
+            if (binaryLeft.getOperator().priority > op.priority) {
+                if (leftRational) {
+                    incrementIndent();
+                }
+                print('(');
+                left.accept(this);
+                print(')');
+
+                if (leftRational) {
+                    decrementIndent();
+                }
+            } else {
+                left.accept(this);
+            }
+        } else {
+            left.accept(this);
+        }
+    }
+
+    public boolean visit(SQLCaseExpr x) {
+        print("CASE ");
+        if (x.getValueExpr() != null) {
+            x.getValueExpr().accept(this);
+            print(" ");
+        }
+
+        printAndAccept(x.getItems(), " ");
+
+        if (x.getElseExpr() != null) {
+            print(" ELSE ");
+            x.getElseExpr().accept(this);
+        }
+
+        print(" END");
+        return false;
+    }
+
+    public boolean visit(SQLCaseExpr.Item x) {
+        print("WHEN ");
+        x.getConditionExpr().accept(this);
+        print(" THEN ");
+        x.getValueExpr().accept(this);
+        return false;
+    }
+
+    public boolean visit(SQLCastExpr x) {
+        print("CAST(");
+        x.getExpr().accept(this);
+        print(" AS ");
+        x.getDataType().accept(this);
+        print(")");
+
+        return false;
+    }
+
+    public boolean visit(SQLCharExpr x) {
+        if ((x.getText() == null) || (x.getText().length() == 0)) {
+            print("NULL");
+        } else {
+            print("'");
+            print(x.getText().replaceAll("'", "''"));
+            print("'");
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLDataType x) {
+        print(x.getName());
+        if (x.getArguments().size() > 0) {
+            print("(");
+            printAndAccept(x.getArguments(), ", ");
+            print(")");
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLExistsExpr x) {
+        if (x.isNot())
+            print("NOT EXISTS (");
+        else {
+            print("EXISTS (");
+        }
+        incrementIndent();
+        x.getSubQuery().accept(this);
+        decrementIndent();
+        print(")");
+        return false;
+    }
+
+    public boolean visit(SQLIdentifierExpr astNode) {
+        print(astNode.getName());
+        return false;
+    }
+
+    public boolean visit(SQLInListExpr x) {
+        x.getExpr().accept(this);
+
+        if (x.isNot()) {
+            print(" NOT IN (");
+        } else {
+            print(" IN (");
+        }
+
+        printAndAccept(x.getTargetList(), ", ");
+        print(')');
+        return false;
+    }
+
+    public boolean visit(SQLIntegerExpr x) {
+        print(x.getNumber().toString());
+        return false;
+    }
+
+    public boolean visit(SQLMethodInvokeExpr x) {
+        if (x.getOwner() != null) {
+            x.getOwner().accept(this);
+            print(".");
+        }
+        print(x.getMethodName());
+        print("(");
+        printAndAccept(x.getParameters(), ", ");
+        print(")");
+        return false;
+    }
+
+    public boolean visit(SQLAggregateExpr x) {
+        print(x.getMethodName());
+        print("(");
+
+        if (x.getOption() != null) {
+            print(x.getOption().toString());
+            print(' ');
+        }
+
+        printAndAccept(x.getArguments(), ", ");
+        print(")");
+        return false;
+    }
+
+    public boolean visit(SQLAllColumnExpr x) {
+        print("*");
+        return true;
+    }
+
+    public boolean visit(SQLNCharExpr x) {
+        if ((x.getText() == null) || (x.getText().length() == 0)) {
+            print("NULL");
+        } else {
+            print("N'");
+            print(x.getText().replace("'", "''"));
+            print("'");
+        }
+        return false;
+    }
+
+    public boolean visit(SQLNotExpr x) {
+        print("NOT ");
+        x.getExpr().accept(this);
+        return false;
+    }
+
+    public boolean visit(SQLNullExpr x) {
+        print("NULL");
+        return false;
+    }
+
+    public boolean visit(SQLNumberExpr x) {
+        print(x.getNumber().toString());
+        return false;
+    }
+
+    public boolean visit(SQLObjectCreateExpr x) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean visit(SQLPropertyExpr x) {
+        x.getOwner().accept(this);
+        print(".");
+        print(x.getName());
+        return false;
+    }
+
+    public boolean visit(SQLQueryExpr x) {
+        SQLObject parent = x.getParent();
+        if (parent instanceof SQLSelect) {
+            parent = parent.getParent();
+        }
+
+        if (parent instanceof SQLStatement) {
+            incrementIndent();
+
+            println();
+            x.getSubQuery().accept(this);
+
+            decrementIndent();
+        } else if (parent instanceof ValuesClause) {
+            println();
+            x.getSubQuery().accept(this);
+            println();
+        } else {
+            print("(");
+            incrementIndent();
+            println();
+            x.getSubQuery().accept(this);
+            println();
+            decrementIndent();
+            print(")");
+        }
+        return false;
+    }
+
+    public boolean visit(SQLSelectGroupByClause x) {
+        if (x.getItems().size() > 0) {
+            print("GROUP BY ");
+            printAndAccept(x.getItems(), ", ");
+        }
+
+        if (x.getHaving() != null) {
+            println();
+            print("HAVING ");
+            x.getHaving().accept(this);
+        }
+        return false;
+    }
+
+    public boolean visit(SQLSelect x) {
+        x.getQuery().setParent(x);
+        x.getQuery().accept(this);
+
+        if (x.getOrderBy() != null) {
+            println();
+            x.getOrderBy().accept(this);
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLSelectQueryBlock x) {
+        print("SELECT ");
+
+        if (SQLSetQuantifier.ALL == x.getDistionOption()) {
+            print("ALL ");
+        } else if (SQLSetQuantifier.DISTINCT == x.getDistionOption()) {
+            print("DISTINCT ");
+        } else if (SQLSetQuantifier.UNIQUE == x.getDistionOption()) {
+            print("UNIQUE ");
+        }
+
+        printSelectList(x.getSelectList());
+
+        if (x.getFrom() != null) {
+            println();
+            print("FROM ");
+            x.getFrom().accept(this);
+        }
+
+        if (x.getWhere() != null) {
+            println();
+            print("WHERE ");
+            x.getWhere().setParent(x);
+            x.getWhere().accept(this);
+        }
+
+        if (x.getGroupBy() != null) {
+            print(" ");
+            x.getGroupBy().accept(this);
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLSelectItem x) {
+        x.getExpr().accept(this);
+
+        if ((x.getAlias() != null) && (x.getAlias().length() > 0)) {
+            print(" AS ");
+            print(x.getAlias());
+        }
+        return false;
+    }
+
+    public boolean visit(SQLOrderBy x) {
+        if (x.getItems().size() > 0) {
+            print("ORDER BY ");
+
+            printAndAccept(x.getItems(), ", ");
+        }
+        return false;
+    }
+
+    public boolean visit(SQLSelectOrderByItem x) {
+        x.getExpr().accept(this);
+        if (x.getType() != null) {
+            print(" ");
+            print(x.getType().name().toUpperCase());
+        }
+
+        if (x.getCollate() != null) {
+            print(" COLLATE ");
+            print(x.getCollate());
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLExprTableSource x) {
+        x.getExpr().accept(this);
+
+        if (x.getAlias() != null) {
+            print(' ');
+            print(x.getAlias());
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLSelectStatement stmt) {
+        SQLSelect select = stmt.getSelect();
+
+        select.accept(this);
+
+        return false;
+    }
+
+    public boolean visit(SQLVariantRefExpr x) {
+        print(x.getName());
+        return false;
+    }
+
+    public boolean visit(SQLDropTableStatement x) {
+        print("DROP TABLE ");
+        printAndAccept(x.getTableSources(), ", ");
+        return false;
+    }
+
+    public boolean visit(SQLDropViewStatement x) {
+        print("DROP VIEW ");
+        printAndAccept(x.getTableSources(), ", ");
+        return false;
+    }
+
+    public boolean visit(SQLTableElement x) {
+        if (x instanceof SQLColumnDefinition) {
+            return visit((SQLColumnDefinition) x);
+        }
+
+        throw new SqlParserException("TODO");
+    }
+
+    public boolean visit(SQLColumnDefinition x) {
+        x.getName().accept(this);
+
+        if (x.getDataType() != null) {
+            print(' ');
+            x.getDataType().accept(this);
+        }
+
+        if (x.getDefaultExpr() != null) {
+            visitColumnDefault(x);
+        }
+
+        for (SQLColumnConstraint item : x.getConstaints()) {
+            print(' ');
+            item.accept(this);
+        }
+
+        if (x.getEnable() != null) {
+            if (x.getEnable().booleanValue()) {
+                print(" ENABLE");
+            }
+        }
+
+        return false;
+    }
+
+    protected void visitColumnDefault(SQLColumnDefinition x) {
+        print(" DEFAULT ");
+        x.getDefaultExpr().accept(this);
+    }
+
+    public boolean visit(SQLDeleteStatement x) {
+        print("DELETE FROM ");
+
+        x.getTableName().accept(this);
+
+        if (x.getWhere() != null) {
+            print(" WHERE ");
+            x.getWhere().setParent(x);
+            x.getWhere().accept(this);
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLCurrentOfCursorExpr x) {
+        print("CURRENT OF ");
+        x.getCursorName().accept(this);
+        return false;
+    }
+
+    public boolean visit(SQLInsertStatement x) {
+        print("INSERT INTO ");
+
+        x.getTableName().accept(this);
+
+        if (x.getColumns().size() > 0) {
+            incrementIndent();
+            println();
+            print("(");
+            for (int i = 0, size = x.getColumns().size(); i < size; ++i) {
+                if (i != 0) {
+                    if (i % 5 == 0) {
+                        println();
+                    }
+                    print(", ");
+                }
+                x.getColumns().get(i).accept(this);
+            }
+            print(")");
+            decrementIndent();
+        }
+
+        if (x.getValues() != null) {
+            println();
+            print("VALUES");
+            println();
+            x.getValues().accept(this);
+        } else {
+            if (x.getQuery() != null) {
+                println();
+                x.getQuery().setParent(x);
+                x.getQuery().accept(this);
+            }
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLUpdateSetItem x) {
+        x.getColumn().accept(this);
+        print(" = ");
+        x.getValue().accept(this);
+        return false;
+    }
+
+    public boolean visit(SQLUpdateStatement x) {
+        print("UPDATE ");
+
+        x.getTableSource().accept(this);
+
+        println();
+        print("SET ");
+        for (int i = 0, size = x.getItems().size(); i < size; ++i) {
+            if (i != 0) {
+                print(", ");
+            }
+            x.getItems().get(i).accept(this);
+        }
+
+        if (x.getWhere() != null) {
+            println();
+            print("WHERE ");
+            x.getWhere().setParent(x);
+            x.getWhere().accept(this);
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLCreateTableStatement x) {
+        print("CREATE TABLE ");
+        if (SQLCreateTableStatement.Type.GLOBAL_TEMPORARY.equals(x.getType())) {
+            print("GLOBAL TEMPORARY ");
+        } else if (SQLCreateTableStatement.Type.LOCAL_TEMPORARY.equals(x.getType())) {
+            print("LOCAL TEMPORARY ");
+        }
+
+        x.getName().accept(this);
+
+        int size = x.getTableElementList().size();
+
+        if (size > 0) {
+            print(" (");
+            incrementIndent();
+            println();
+            for (int i = 0; i < size; ++i) {
+                if (i != 0) {
+                    print(", ");
+                    println();
+                }
+                x.getTableElementList().get(i).accept(this);
+            }
+            decrementIndent();
+            println();
+            print(")");
+        }
+
+        return false;
+    }
+
+    public boolean visit(SQLUniqueConstraint x) {
+        if (x.getName() != null) {
+            print("CONSTRAINT ");
+            x.getName().accept(this);
+            print(' ');
+        }
+
+        print("UNIQUE (");
+        for (int i = 0, size = x.getColumns().size(); i < size; ++i) {
+            if (i != 0) {
+                print(", ");
+            }
+            x.getColumns().get(i).accept(this);
+        }
+        print(")");
+        return false;
+    }
+
+    public boolean visit(NotNullConstraint x) {
+        print("NOT NULL");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLUnionQuery x) {
+        x.getLeft().accept(this);
+        println();
+        print(x.getOperator().name);
+        println();
+
+        boolean needParen = false;
+
+        if (x.getOrderBy() != null) {
+            needParen = true;
+        }
+
+        if (needParen) {
+            print('(');
+            x.getRight().accept(this);
+            print(')');
+        } else {
+            x.getRight().accept(this);
+        }
+
+        if (x.getOrderBy() != null) {
+            println();
+            x.getOrderBy().accept(this);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLUnaryExpr x) {
+        print(x.getOperator().name);
+        SQLExpr expr = x.getExpr();
+        if (expr instanceof SQLBinaryOpExpr) {
+            print('(');
+            expr.accept(this);
+            print(')');
+        } else if (expr instanceof SQLUnaryExpr) {
+            print('(');
+            expr.accept(this);
+            print(')');
+        } else {
+            expr.accept(this);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLHexExpr x) {
+        print("0x");
+        print(x.getHex());
+
+        String charset = (String) x.getAttribute("USING");
+        if (charset != null) {
+            print(" USING ");
+            print(charset);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLSetStatement x) {
+        print("SET ");
+        printAndAccept(x.getItems(), ", ");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLAssignItem x) {
+        x.getTarget().accept(this);
+        print(" = ");
+        x.getValue().accept(this);
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLCallStatement x) {
+        print("CALL ");
+        x.getProcedureName().accept(this);
+        print('(');
+        printAndAccept(x.getParameters(), ", ");
+        print(')');
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLJoinTableSource x) {
+        x.getLeft().accept(this);
+        if (x.getJoinType() == JoinType.COMMA) {
+            print(",");
+        } else {
+            print(" ");
+            print(JoinType.toString(x.getJoinType()));
+        }
+        print(" ");
+        x.getRight().accept(this);
+
+        if (x.getCondition() != null) {
+            print(" ON ");
+            x.getCondition().accept(this);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(ValuesClause x) {
+        print("(");
+        incrementIndent();
+        for (int i = 0, size = x.getValues().size(); i < size; ++i) {
+            if (i != 0) {
+                if (i % 5 == 0) {
+                    println();
+                }
+                print(", ");
+            }
+
+            SQLExpr expr = x.getValues().get(i);
+            expr.setParent(x);
+            expr.accept(this);
+        }
+        decrementIndent();
+        print(")");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLSomeExpr x) {
+        print("SOME (");
+
+        incrementIndent();
+        x.getSubQuery().accept(this);
+        decrementIndent();
+        print(")");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLAnyExpr x) {
+        print("ANY (");
+
+        incrementIndent();
+        x.getSubQuery().accept(this);
+        decrementIndent();
+        print(")");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLAllExpr x) {
+        print("ALL (");
+
+        incrementIndent();
+        x.getSubQuery().accept(this);
+        decrementIndent();
+        print(")");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLInSubQueryExpr x) {
+        x.getExpr().accept(this);
+        if (x.isNot()) {
+            print(" NOT IN (");
+        } else {
+            print(" IN (");
+        }
+
+        incrementIndent();
+        x.getSubQuery().accept(this);
+        decrementIndent();
+        print(")");
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLListExpr x) {
+        print("(");
+        printAndAccept(x.getItems(), ", ");
+        print(")");
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLSubqueryTableSource x) {
+        print("(");
+        incrementIndent();
+        x.getSelect().accept(this);
+        println();
+        decrementIndent();
+        print(")");
+
+        if (x.getAlias() != null) {
+            print(' ');
+            print(x.getAlias());
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLTruncateStatement x) {
+        print("TRUNCATE TABLE ");
+        printAndAccept(x.getTableSources(), ", ");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLDefaultExpr x) {
+        print("DEFAULT");
+        return false;
+    }
+
+    @Override
+    public void endVisit(SQLCommentStatement x) {
+
+    }
+
+    @Override
+    public boolean visit(SQLCommentStatement x) {
+        print("COMMENT ON ");
+        if (x.getType() != null) {
+            print(x.getType().name());
+            print(" ");
+        }
+        x.getOn().accept(this);
+
+        print(" IS ");
+        x.getComment().accept(this);
+
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLUseStatement x) {
+        print("USE ");
+        x.getDatabase().accept(this);
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLAlterTableAddColumn x) {
+        print("ADD (");
+        printAndAccept(x.getColumns(), ", ");
+        print(")");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLAlterTableDropColumnItem x) {
+        print("DROP COLUMN ");
+        x.getColumnName().accept(this);
+        return false;
+    }
+
+    @Override
+    public void endVisit(SQLAlterTableAddColumn x) {
+
+    }
+
+    @Override
+    public boolean visit(SQLDropIndexStatement x) {
+        print("DROP INDEX ");
+        x.getIndexName().accept(this);
+        print(" ON ");
+        x.getTableName().accept(this);
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLSavePointStatement x) {
+        print("SAVEPOINT ");
+        x.getName().accept(this);
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLReleaseSavePointStatement x) {
+        print("RELEASE SAVEPOINT ");
+        x.getName().accept(this);
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLRollbackStatement x) {
+        print("ROLLBACK");
+        if (x.getTo() != null) {
+            print(" TO ");
+            x.getTo().accept(this);
+        }
+        return false;
+    }
+
+    public boolean visit(SQLCommentHint x) {
+        print("/*");
+        print(x.getText());
+        print("*/");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLCreateDatabaseStatement x) {
+        print("CREATE DATABASE ");
+        x.getName().accept(this);
+        return false;
+    }
+}

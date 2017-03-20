@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="zdal_abstract_sequence" abstract="true">
+		<property name="dbmode" value="dev" />
+		<property name="zone" value="gzone" />
+		<property name="zdataconsoleUrl" value="http://localcache-2-2.bjl.alipay.net:8080" />
+		<property name="configPath" value="config/sequence" />
+	</bean>
+
+	<!-- multipleSequence1 -->	
+	<bean id="multipleSequence1" class="com.alipay.zdal.sequence.impl.MultipleSequence"	>
+		<property name="sequenceDao">
+			<ref bean="multipleSequenceDao1" />
+		</property>
+		<property name="sequenceName">
+			<value>sequence_BCD1</value>
+		</property>				
+	   <property name="minValue">
+			<value>150</value>
+		</property>
+		<property name="maxValue">
+			<value>8000</value>
+		</property>
+		<property name="innerStep">
+			<value>50</value>
+		</property>	
+	</bean>
+	
+	<bean id="sequenceDataSource1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence1"/>
+        <property name="appDsName" value="sequenceds"/>  
+	</bean> 
+	 	 
+	<bean id="multipleSequenceDao1"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+		<property  name="zdalDataSource" ref="sequenceDataSource1"/>
+		<!-- 自动调整开关，默认为false -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>
+	
+	<!-- multipleSequence2 -->	
+		<bean id="multipleSequence2" class="com.alipay.zdal.sequence.impl.MultipleSequence"	>
+		<property name="sequenceDao">
+			<ref bean="multipleSequenceDao2" />
+		</property>
+		<property name="sequenceName">
+			<value>sequence_special</value>
+		</property>				
+	   <property name="minValue">
+			<value>100</value>
+		</property>
+		<property name="maxValue">
+			<value>8000</value>
+		</property>
+		<property name="innerStep">
+			<value>50</value>
+		</property>	
+	</bean>
+	
+	<bean id="sequenceDataSource2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence1"/>
+        <property name="appDsName" value="sequenceds"/>  
+	</bean> 
+	 
+	<bean id="multipleSequenceDao2"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init" >
+		<!-- 数据源列表，标示为0,1,2...等  -->
+        <property  name="zdalDataSource" ref="sequenceDataSource2"/>
+		<!-- 自动调整开关，默认为true -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>
+
+	<!-- multipleSequence3 -->	
+		<bean id="multipleSequence3" class="com.alipay.zdal.sequence.impl.MultipleSequence"	>
+		<property name="sequenceDao">
+			<ref bean="multipleSequenceDao3" />
+		</property>
+		<property name="sequenceName">
+			<value>sequence_BCD1</value>
+		</property>				
+	   <property name="minValue">
+			<value>150</value>
+		</property>
+		<property name="maxValue">
+			<value>8000</value>
+		</property>
+		<property name="innerStep">
+			<value>50</value>
+		</property>	
+	</bean>
+	<!--数据源1 -->    
+    <bean id="database0" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence2"/>
+        <property name="appDsName" value="datasource0"/>     
+	 </bean>
+	 
+	<!--数据源2-->    
+     <bean id="database1" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence2"/>
+        <property name="appDsName" value="datasource1"/>      
+	 </bean>
+  	<!--数据源3-->	 
+	<bean id="database2" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence2"/>
+        <property name="appDsName" value="datasource2"/>    
+	 </bean> 
+	 
+	<bean id="multipleSequenceDao3"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+		<property name="dataSourceList">
+			<list>
+				<ref bean="database0" />
+				<ref bean="database1" />
+				<ref bean="database2" />
+			</list>
+		</property>
+		<!-- 自动调整开关，默认为false -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>
+	
+	<!-- multipleSequence4 -->	
+	<bean id="multipleSequence4" class="com.alipay.zdal.sequence.impl.MultipleSequence"	>
+		<property name="sequenceDao">
+			<ref bean="multipleSequenceDao6" />
+		</property>
+		<property name="sequenceName">
+			<value>sequence_Hello</value>
+		</property>				
+	   <property name="minValue">
+			<value>150</value>
+		</property>
+		<property name="maxValue">
+			<value>8000</value>
+		</property>
+		<property name="innerStep">
+			<value>50</value>
+		</property>	
+	</bean>
+	 
+	<bean id="sequenceDataSource6" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence1"/>
+        <property name="appDsName" value="sequenceds"/>  
+	</bean> 
+	 
+	<bean id="multipleSequenceDao6"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+        <property  name="zdalDataSource" ref="sequenceDataSource6"/>
+		<!-- 自动调整开关，默认为true -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>
+	
+	<!-- multipleSequenceFactory1 -->
+	<bean id="multipleSequenceFactory1" class="com.alipay.zdal.sequence.impl.MultipleSequenceFactory" >
+       <property name="multipleSequenceDao">
+           <ref bean="multipleSequenceDao4" />
+       </property>
+   </bean>
+   
+	<bean id="sequenceDataSource4" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence1"/>
+        <property name="appDsName" value="sequenceds"/>
+	 </bean> 
+	 
+	<bean id="multipleSequenceDao4"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+		<property  name="zdalDataSource" ref="sequenceDataSource4"/>
+		<!-- 自动调整开关，默认为false -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>	
+	
+	<!-- multipleSequenceFactory2 -->
+	<bean id="multipleSequenceFactory2" class="com.alipay.zdal.sequence.impl.MultipleSequenceFactory" >
+       <property name="multipleSequenceDao">
+           <ref bean="multipleSequenceDao5" />
+       </property>
+   </bean>
+   
+   <bean id="sequenceDataSource5" class="com.alipay.zdal.client.jdbc.ZdalDataSource"  init-method="init"
+		parent="zdal_abstract_sequence"  destroy-method="close">
+		<property name="appName" value="sequence3"/>
+        <property name="appDsName" value="sequenceds"/>  
+	</bean> 
+	 
+	<bean id="multipleSequenceDao5"  class="com.alipay.zdal.sequence.impl.MultipleSequenceDao" init-method="init">
+		<!-- 数据源列表，标示为0,1,2...等  -->
+		<property  name="zdalDataSource" ref="sequenceDataSource5"/>
+		<!-- 自动调整开关，默认为false -->
+		<property name="adjust">
+			<value>true</value>
+		</property>
+		<!-- tableName为存放sequence的表名，默认为 sequence -->
+		<property name="tableName" value="multiple_sequence" />
+	</bean>	
+
+</beans>

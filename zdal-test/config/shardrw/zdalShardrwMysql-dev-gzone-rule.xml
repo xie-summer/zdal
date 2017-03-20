@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="MysqlShardrwDs4Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="MysqlShardrwDs4ReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="MysqlShardrwDs4ReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="MysqlShardrwDs4_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="MysqlShardrwDs4_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+	<bean id="MysqlShardrwDs1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="MysqlShardrwDs1ReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="MysqlShardrwDs1ReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="MysqlShardrwDs1_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="MysqlShardrwDs1_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+	<bean id="MysqlShardrwDs3Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="MysqlShardrwDs3ReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="MysqlShardrwDs3ReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="MysqlShardrwDs3_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="MysqlShardrwDs3_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+	<bean id="MysqlShardrwDs2Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="MysqlShardrwDs2ReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="MysqlShardrwDs2ReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="MysqlShardrwDs2_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="MysqlShardrwDs2_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+</beans>

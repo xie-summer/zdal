@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sofa="http://img.alipay.net/dtd/schema/service"
+	xmlns:esb="http://mule.mulesource.org/schema/esb"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://img.alipay.net/dtd/schema/service http://img.alipay.net/dtd/schema/service/sofa-service.xsd 
+		 http://mule.mulesource.org/schema/esb http://mule.mulesource.org/schema/esb.xsd"
+	default-autowire="byName">
+
+	<bean id="singleWriteLdcInitFromLocal03" class="com.alipay.zdal.tair.config.impl.ZdalTairConfiguration" >
+		<property name="appTairName" value="singleWriteLdcInitFromLocal03" />
+		<property name="dbMode" value="test" />
+		<property name="legacyTair" ref="masterTair03" />
+		<property name="legacyRwWeight">
+			<value>idc:r10w10,ldc:r00w00</value>
+		</property>
+		<property name="shardingRule">
+			<value>Integer.valueOf(#user_id#.substring(14,16)).intdiv(60);</value>
+		</property>
+		<property name="tairIndexs" value="tair_01,tair_02,tair_03"/>
+		<property name="tairMappingMap">
+			<map>
+				<entry key="tair_01" value="masterTair01:r10w10,failoverTair01:r00w00"/>	
+				<entry key="tair_02" value="masterTair02:r10w10,failoverTair02:r00w00"/>
+				<entry key="tair_03" value="masterTair03:r10w10,failoverTair03:r00w00"/>		
+			</map>
+		</property>
+		<property name="logicalTairSettingList">
+			<list>
+				<ref bean="masterTair01" />
+				<ref bean="failoverTair01"/>	
+				<ref bean="masterTair02" />
+				<ref bean="failoverTair02"/>
+				<ref bean="masterTair03" />
+				<ref bean="failoverTair03"/>		
+			</list>
+		</property>
+		<property name="zonePolicy" value="Logging" />
+	</bean>
+
+	<bean id="masterTair01" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="10" />
+		<property name="tairName" value="masterTair01" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+	<bean id="failoverTair01" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="20" />
+		<property name="tairName" value="failoverTair01" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+		<bean id="masterTair02" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="11" />
+		<property name="tairName" value="masterTair02" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+	<bean id="failoverTair02" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="21" />
+		<property name="tairName" value="failoverTair02" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+		<bean id="masterTair03" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="12" />
+		<property name="tairName" value="masterTair03" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+	<bean id="failoverTair03" class="com.alipay.zdal.tair.config.impl.LogicalTairSetting">
+		<property name="nameSpace" value="22" />
+		<property name="tairName" value="failoverTair03" />
+		<property name="zoneId" value="RZ01A" />
+		<property name="physicalTairSetting" ref="physicalTair" />
+	</bean>
+	
+	
+	<bean id="physicalTair" class="com.alipay.zdal.tair.config.impl.PhysicalTairSetting">
+		<property name="tairName" value="physicalTair" />
+		<property name="configServerList">
+			<list>
+				<value>tair.stable.alipay.net:5198</value>
+				<value>tair2.stable.alipay.net:5198</value>
+			</list>
+		</property>
+		<property name="groupName" value="sessiontair" />
+	</bean>
+	
+</beans>

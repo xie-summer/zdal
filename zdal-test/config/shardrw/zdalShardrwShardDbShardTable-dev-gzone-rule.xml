@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="ShardrwShardDbShardTableDs1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="ShardrwShardDbShardTableDs1ReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="ShardrwShardDbShardTableDs1ReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="ShardrwShardDbShardTableDs1_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="ShardrwShardDbShardTableDs1_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>resetForEachDB:[_0-_1]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#age#)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#user_id#)%2
+			</value>
+		</property>
+	</bean>
+</beans>
